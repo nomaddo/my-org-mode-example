@@ -1,0 +1,42 @@
+#+TITLE: ほげほげ
+#+AUTHOR: nomaddo
+#+LANGUAGE: ja
+
+#+OPTIONS: num:nil author:nil creator:nil LaTeX:t toc:1
+#+OPTIONS: Latex:amsmath LaTeX:dvipng
+#+OPTIONS: ^:{}
+#+MATHJAX: align:"left" mathml:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org-mode-document.css" />
+
+* 2章
+** 2.2
+   1. /OCaml is an industrial strength programming language supporting functional, imperative and object-oriented styles./
+   2. *太字* /斜め/ a_1 a_2
+   3. このケースでは木構造で表すと[[graph1][下のように]]パースされます
+      そのため、マイナスの引数として渡されたint_of_floatは =int= 型を持つと期待されているけども
+      実際には =float -> int= 型を持つとエラーが出力されています。
+   #+Name: graph1   
+   #+begin_src dot :file parse_tree.png :cmdline -Kdot -Tpng
+   digraph {
+     label = "パースツリー";
+     "-" -> "float_of_int";
+     "-" -> "0.7";
+   }
+   #+end_src
+   4. [[code: ocaml][素数判定関数]]をみる
+
+   #+Name: code: ocaml
+   #+begin_src ocaml
+    (* 素数チェック関数4 *)
+    let is_prime4 l n =
+      let l = List.rev l in (* prime_seq2だと素数が大きい順に並ぶので、小さい順に並ぶように順番を逆にする *)
+      let rec check max l n =
+        match l with
+        | [] -> true
+        | x :: xs when x > max -> true
+        | x :: xs -> if n mod x = 0 then false else check max xs n
+      in
+      check (int_of_float (floor (sqrt (float_of_int n)))) l n
+      (* 割る数の上限をmaxとして√nを予め計算しておく *)
+   #+end_src
+   
